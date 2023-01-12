@@ -25,11 +25,11 @@ WSGI (Web Server Gateway Interface-Web Sunucusu Ağ Geçidi Arayüzü) python il
 
 Windows:
 ```
-pip instll flask
+pip install flask
 ```
 Linux-Mac:
 ```
-pip3 instll flask
+pip3 install flask
 ```
 ## Klasör Yapısı
 
