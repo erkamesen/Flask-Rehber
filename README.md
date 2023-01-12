@@ -3,7 +3,7 @@
 ## Flask Nedir ?
 
 Flask 2011 yılında Poocco 'Armin Ronacher' tarafından nisan şakası olarak çıkarılan, python dili ile yazılmış bir açık kynak web geliştirme framework üdür.
-HTML dosyasına python kodlarını yazmak için Django gibi Jinja2 şblon motorunu ve Werkzeug ile WSGI arayüzünü kullanır.
+HTML dosyasına python kodlarını yazmak için Django gibi Jinja2 şablon motorunu ve Werkzeug ile WSGI arayüzünü kullanır.
 
 ## WSGI Nedir ?
 
