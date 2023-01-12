@@ -3,11 +3,14 @@
 ![1 0G5zu7CnXdMT9pGbYUTQLQ](https://user-images.githubusercontent.com/120065120/212087425-6ee72546-16fc-476a-9067-54de6a4efbd9.png)
 
 İçerik:
-1. [Flask Nedir ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-nedir-)
-2. [WSGI Nedir ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#wsgi-nedir-)
-3. [Flask Kurulumu](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-kurulumu)
-4. [Klasör Yapısı](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#klas%C3%B6r-yap%C4%B1s%C4%B1)
-5. [Jinja2 Template Sayfaları](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#jinja2-template-sayfalar%C4%B1)
+- [Flask Nedir ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-nedir-)
+- [WSGI Nedir ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#wsgi-nedir-)
+- [Flask Kurulumu](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-kurulumu)
+- [Klasör Yapısı](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#klas%C3%B6r-yap%C4%B1s%C4%B1)
+- [Jinja2 Template Sayfaları](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#jinja2-template-sayfalar%C4%B1)
+- [Default Host ve Port](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#default-host-ve-port)
+- [Basit Flask Uygulaması](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#basit-flask-uygulamas%C4%B1)
+
 --- 
 
 ## Flask Nedir ?
@@ -83,5 +86,59 @@ HTML sayfsı içinde loop kullanımı:
 {{ i }}
 {% endfor %}
 ```
+---
+
+## Default Host ve Port
+Flask uygulamamızın varsayılan:
+- Host: http://.27.0.0.1
+- Port: 5000
+Fakat bunu uygulamamız içinden değiştirebiliyoruz.
+```
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)
+```
+
+
+## Basit Flask Uygulaması
+Flask ile yapacağımız web uygulamamızın en önemli kısımlarından biri varsayılan host ve porta (http://localhost:5000) client üzerinden gelecek olan requestlere response döndüren python dosyamızdır. Kısaca Flask sınıfından objemizi initialize edeceğimiz python dosyasıdır diyebiliriz.
+**app.py**
+```
+from flask import Flask
+```
+Flask sınıfımızı import etmekle başlıyoruz.
+```
+app = Flask(__name__)
+```
+Flask sınıfından bir 'app' nesnesi oluşturuyoruz.
+```
+@app.route('/')
+def index():
+    return '<h1>Hello World</h1>'
+```
+Çalıştırmak için python dosyamızın ismi app.py ise bulunduğu klasörde terminal açıp
+```
+flask --app run
+```
+yada
+```
+flask run
+```
+yazmamız yeterlidir. Lakin dosyanın ismi farklı ise
+```
+flask --app <dosyaismi> run
+```
+yazılmalıdır.
+
+![flaskrun](https://user-images.githubusercontent.com/120065120/212184085-f9ad83ae-8c1a-4f93-a218-59235b6da660.PNG)
+
+index() fonksiyonumuz da route() decoratorunu gelen requestlere fonksiyonumuzun bir cevap döndürmesi için kullanıyoruz. Fonksiyonumuz 'return' ile bir değer döndürmelidir. route() metodu parametre olarak bir endpoint alıyor ve bizim burda kullandığımız '/' anasayfamızı temsil ediyor.
+Özetle anasayfamıza('/') bir GET request atıldığı zaman fonksiyonumuz tetikleniyor ve cliente bir response yolluyor.
+
+![index](https://user-images.githubusercontent.com/120065120/212183376-3c1add42-399b-4957-b60b-50c30cd65b7d.PNG)
+
+
+
+
+
 
 
