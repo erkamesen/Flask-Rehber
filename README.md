@@ -7,6 +7,7 @@
 2. [WSGI Nedir ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#wsgi-nedir-)
 3. [Flask Kurulumu](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-kurulumu)
 4. [Klasör Yapısı](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#klas%C3%B6r-yap%C4%B1s%C4%B1)
+5. [Jinja2 Template Sayfaları](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#jinja2-template-sayfalar%C4%B1)
 --- 
 
 ## Flask Nedir ?
@@ -18,9 +19,13 @@ Python kodlarını yazmak için Django gibi Jinja2 şablon motorunu ve Werkzeug 
 - [Flask](https://flask.palletsprojects.com/en/2.2.x/)
 - [Pocoo](https://www.pocoo.org/)
 
+---
+
 ## WSGI Nedir ?
 
 WSGI (Web Server Gateway Interface-Web Sunucusu Ağ Geçidi Arayüzü) python ile bir web uygulaması geliştirmek için kullanılan arayüzdür. Server olarak da adlandırılabilir.Web Server'ların python kodumuzu anlaması için bize aracılık eder. Sonuç olarak eğer WSGI kullanmazsak server yazdığımız kodları çalıştıramayacaktır.
+
+---
 
 ## Flask Kurulumu
 
@@ -32,6 +37,8 @@ Linux-Mac:
 ```
 pip3 install flask
 ```
+---
+
 ## Klasör Yapısı
 Basit bir flask uygulaması için klasör yapısı şu şekildedir:
 ```
@@ -49,7 +56,32 @@ Flask uygulamamızda Flask sınıfından objemizi initialize ettiğimiz .py dosy
 - /static klasörü içinde CSS , assets , resim dosyalarımızı  oluşturuyoruz.
 Bu yapı objemizi oluşturduğumuz python dosyasına göre default şekilde ayarlıdır ve dileğe göre obje oluşturulurken parametre olarak path değiştirilebilir.(-zorda kalmdıkça tavsiye edilmez-) Özellikle Blueprint le çalışırken blueprintlerimizi views klasörü içinde oluşturulabileceğinden templates ve static klasörlerimizin path lerini kendimiz prmetre olarak belirlemek zorundayız aksi halde Blueprint den oluşturuğumuz objelerimiz bu klasörleri bulamayacaktır.
 
+--- 
 ## Flask ile Veritabanı Bağlantısı
 Flask, PostgreSQL, SQLite ve MySQL gibi RDBMS'lerin çoğuyla çalışır. Ancak veritabanlarına bağlanmak için 'Flask-SQLAlchemy' uzantısını(paket) kullanmalıyız.
 SQL sorguları yazmaya gerek kalmadan geliştirme sırasında veritabanı etkileşimini ve yönetimini kolaylaştırır.Ayrıca, SQL enjeksiyon saldırılarına eğilimlidir. 
 MongoDB gibi No-SQL veri depolarıyla çalışmak için ise 'Flask-MongoEngine' uzantısını kullanabiliriz.
+
+---
+## Jinja2 Template Sayfaları
+[Jinja2](https://jinja.palletsprojects.com/en/3.1.x/) hızlı, etkileyici, genişletilebilir bir şablon oluşturma motorudur. Şablondaki özel yer tutucular, Python sözdizimine benzer kod yazmaya izin verir. 
+Özet olarak belirtmek gerekirse bu python kodları '{{ }}' ve '{% %}' arasındaki kısımlarda gerçekleşmekte. Daha doğru bir söylem ile bu kısımlarda oluşturduğumuz değişken isimleri projemizin python kısmında çalışıyor ve sonuçlar bu kısımlara aktarılmakta ve uygulamamız içinde bu sonuçlar gösterilebilmektedir.
+
+HTML sayfası içinde değişken kullanımı:
+```
+{{ deşişken }}
+```
+HTML sayfası içinde koşullu ifadele kullanımı:
+```
+{% if degisken %}
+{{ deşişken }}
+{% endif %}
+```
+HTML sayfsı içinde loop kullanımı:
+```
+{% for i in degisken %}
+{{ i }}
+{% endfor %}
+```
+
+
