@@ -10,7 +10,7 @@
 - [Jinja2 Template Sayfaları](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#jinja2-template-sayfalar%C4%B1)
 - [Default Host ve Port](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#default-host-ve-port)
 - [Basit Flask Uygulaması](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#basit-flask-uygulamas%C4%B1)
-
+- [Route Değişkenleri](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#route-dei%C5%9Fkenleri)
 --- 
 
 ## Flask Nedir ?
@@ -98,7 +98,7 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
 ```
 
-
+---
 ## Basit Flask Uygulaması
 Flask ile yapacağımız web uygulamamızın en önemli kısımlarından biri varsayılan host ve porta (http://localhost:5000) client üzerinden gelecek olan requestlere response döndüren python dosyamızdır. Kısaca Flask sınıfından objemizi initialize edeceğimiz python dosyasıdır diyebiliriz.
 **app.py**
@@ -135,6 +135,13 @@ index() fonksiyonumuz da route() decoratorunu gelen requestlere fonksiyonumuzun 
 Özetle anasayfamıza('/') bir GET request atıldığı zaman fonksiyonumuz tetikleniyor ve cliente bir response yolluyor.
 
 ![index](https://user-images.githubusercontent.com/120065120/212183376-3c1add42-399b-4957-b60b-50c30cd65b7d.PNG)
+---
+
+## Route Deişkenleri
+
+Flask, uygulamamızda URL mize değişken ekleyerek dinamik hale getirmemizi mümkün kılıyor. Bu değişkenimizi URL mizde route('/<değişken>') olarak kullanabiliriz ve decoratorumuzun kullanıldığı fonksiyonda bu değişkeni çağırabiliriz.
+
+
 
 
 
