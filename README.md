@@ -4,7 +4,9 @@
 
 İçerik:
 - [Flask Nedir ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-nedir-)
+- [Flask Dependencies(Bağımlılıklar)](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-dependenciesba%C4%9F%C4%B1ml%C4%B1l%C4%B1klar)
 - [WSGI Nedir ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#wsgi-nedir-)
+- [Werkzeug Nedir ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#werkzeug-nedir-)
 - [Flask Kurulumu](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-kurulumu)
 - [Klasör Yapısı](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#klas%C3%B6r-yap%C4%B1s%C4%B1)
 - [Jinja2 Template Sayfaları](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#jinja2-template-sayfalar%C4%B1)
@@ -15,23 +17,58 @@
 
 ## Flask Nedir ?
 
-En kısa hali ile Flask 2011 yılında Pocoo python topluluğundan 'Armin Ronacher' tarafından nisan şakası olarak çıkarılan, python dili ile yazılmış açık kaynak bir web geliştirme micro framework'üdür.(Web Framework).
+En kısa hali ile [Flask](https://flask.palletsprojects.com/en/2.2.x/) 2011 yılında Pocoo python topluluğundan 'Armin Ronacher' tarafından nisan şakası olarak çıkarılan, python dili ile yazılmış açık kaynak bir web geliştirme micro framework'üdür.(Web Framework).
 Flask çabuk öğrenilebilen, kolay ve ihtiyacımız olan ek paketleri sonradan projemize dahil edebildiğimiz için projenin hantallaşmasını önleyen, route yapısı basit ve benchmarklarına bakıldığında performansı gayet yüksek bir frameworktür.
 Python kodlarını yazmak için Django gibi Jinja2 şablon motorunu ve Werkzeug aracı ile WSGI arayüzünü kullanır.
 
-- [Flask](https://flask.palletsprojects.com/en/2.2.x/)
-- [Pocoo](https://www.pocoo.org/)
 
 ---
-
+## Flask Dependencies(Bağımlılıklar)
+Flask kurulurken bu dağıtımlar otomatik olarak kurulacaktır:
+- [Werkzeug](https://palletsprojects.com/p/werkzeug/) uygulamalar ve sunucular arasındaki standart Python arabirimi olan WSGI'yi uygular.
+- [Jinja](https://palletsprojects.com/p/jinja/), uygulamanızın sunduğu sayfaları işleyen bir şablon dilidir.
+- [MarkupSafe](https://palletsprojects.com/p/markupsafe/), Jinja ile birlikte gelir. Injection saldırılarından kaçınmak için şablonları işlerken güvenilmeyen girdilerden kaçar.
+- [ItsDangerous](https://palletsprojects.com/p/itsdangerous/), uygulmada bütünlüğünü ve önemli verileri imzalayarak onların güvenliğini sağlar. Flask da genel olarak session ve cookie güvenliği için kullanılır.
+- [Click](https://palletsprojects.com/p/click/), komut satırı uygulamaları yazmak için bir framework dür.
+---
 ## WSGI Nedir ?
 
 WSGI (Web Server Gateway Interface-Web Sunucusu Ağ Geçidi Arayüzü) python ile bir web uygulaması geliştirmek için kullanılan arayüzdür. Server olarak da adlandırılabilir.Web Server'ların python kodumuzu anlaması için bize aracılık eder. Sonuç olarak eğer WSGI kullanmazsak server yazdığımız kodları çalıştıramayacaktır.
 
 ---
 
+## Werkzeug Nedir ?
+Werkzeug requestleri, response ları ve diğer yardımcı fonksiyonları uygulayan bir WSGI toolkit idir.Python'da WSGI uyumlu bir web uygulaması oluşturmak için kullanılabilen bir library koleksiyonudur. Bir web sunucusu doğrudan Python ile iletişim kuramadığı için Python web uygulamaları için bir WSGI sunucusu gereklidir.
+
+---
 ## Flask Kurulumu
 
+### Environment(venv)
+virtualenv, sanal Python ortamı oluşturucusudur.Kullanıcının birden çok Python ortamını yan yana oluşturmasına yardımcı olur, böylece library lerin farklı sürümleri arasındaki uyumluluk sorunlarını önleyerek düzgün şekilde çalışmasını sağlar. </br>
+Aşağıdaki komutlar venv'i kurar:
+```
+pip install virtualenv
+```
+Bu komutun bir yöneticiye ihtiyacı var eğer Linux-Mac Os kullnıyorsak **pip** den önce **sudo** kullanabiliriz. </br>
+Eğer windows kullanıyorsak Administrator olarak giriş yapmamız yeterliir.
+```
+sudo apt-get install virtualenv
+```
+Artık projemizin bulunduğu klasöre gidip sanal ortamımızı aktif edebiliriz. Terminalimizi projemiz içinde açıp:
+```
+virtualenv venv
+```
+Artık sanal ortamımızı projemizin içine kurduk aktif edip içine istediğimiz paketi pip ile kurabiliriz.(yeni bir sanal ortam oluşturduğumuz için daha önce kurduğunuz gömülü olmayan paketleri yine kuracaksınız.)
+
+Linux/Os
+```
+venv/bin/activate
+```
+Windows:
+```
+venv/scripts/activate
+```
+Artık sanal ortamımıza flask kurabiliriz. 
 Windows:
 ```
 pip install flask
