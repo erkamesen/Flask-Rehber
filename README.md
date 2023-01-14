@@ -2,7 +2,8 @@
 
 <p>
   <img align="left" width="500" height="300" src="https://user-images.githubusercontent.com/120065120/212087425-6ee72546-16fc-476a-9067-54de6a4efbd9.png" />
-  Flask, hafif bir WSGI web uygulama çerçevesidir. Karmaşık uygulamalara ölçeklenebilme özelliğiyle hızlı ve kolay bir başlangıç ​​yapmak için tasarlanmıştır. Werkzeug ve Jinja etrafında basit bir sarmalayıcı olarak başladı ve en popüler Python web uygulama çerçevelerinden biri haline geldi.
+  Flask, hafif bir WSGI web uygulama çerçevesidir. Karmaşık uygulamalara ölçeklenebilme özelliğiyle hızlı ve kolay bir başlangıç ​​yapmak için tasarlanmıştır. Werkzeug ve Jinja etrafında basit bir sarmalayıcı olarak başladı ve en popüler Python web uygulama çerçevelerinden biri haline geldi. <br>
+  Flask size sadece öneriler sunar herhangi bir bağımlılık veya proje düzenine zorlamaz. Kullanmak istedikleri araçları ve kitaplıkları seçmek geliştiriciye kalmıştır. Topluluk tarafından sağlanan ve yeni işlevler eklemeyi kolaylaştıran birçok uzantı vardır.
 </p>
 
 <br><br><br><br><br><br><br>
@@ -24,6 +25,7 @@
 - [Default Host ve Port](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#default-host-ve-port)
 - [Basit Flask Uygulaması](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#basit-flask-uygulamas%C4%B1)
 - [Route Değişkenleri](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#route-dei%C5%9Fkenleri)
+- [HTTP Metotları](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#http-metotlar%C4%B1)
 --- 
 
 ## Flask Nedir ?
@@ -217,6 +219,32 @@ index() fonksiyonumuz da route() decoratorunu gelen requestlere fonksiyonumuzun 
 ## Route Deişkenleri
 
 Flask, uygulamamızda URL mize değişken ekleyerek dinamik hale getirmemizi mümkün kılıyor. Bu değişkenimizi URL mizde route('/<değişken>') olarak kullanabiliriz ve decoratorumuzun kullanıldığı fonksiyonda bu değişkeni çağırabiliriz.
+
+## HTTP Metotları
+
+Web uygulamaları, URL'lere erişirken farklı HTTP yöntemleri kullanır. Flask ile çalışıyorsanız eğer HTTP yöntemlerine aşina olmalısınız. Default olarak, route() yalnızca GET isteklerine yanıt verir. Farklı HTTP yöntemlerini işlemek için route() dekoratörünün 'methods' parametresini kullanarak diğer metotları da URL'miz de işlenecek hale getirebilirsiniz.
+```
+@app.route('/login', methods=['GET', 'POST'])
+```
+![HTTP](https://user-images.githubusercontent.com/120065120/212473876-ec278681-1d26-460a-952b-6f0fe7898e47.png)
+
+
+```
+from flask import request
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        return do_the_login()
+    else:
+        return show_the_login_form()
+```
+
+- **GET**: Bu metod sunucudan veri almak için kullanılır. GET ve POST metodları en sık kullanılan metodlar olup sunucudaki kaynaklara erişmek için kullanılırlar.GET metodu ile sorgu metinleri URL içinde gönderilebilir. Bunun en önemli faydası kullanıcıların bookmark edebilmeleri ve aynı sorguyu içeren istekleri daha sonra gönderebilmelerini sağlaması ve tarayıcıda önceki sorguların “geri” tuşu ile veya tarayıcı geçmişinden çağrılarak aynı sayfalara ulaşabilmeleridir. Güvenlik açısından URL’lerin ekranda görüntüleniyor olması ve URL’in hedefine ulaşıncaya kadar ve hedef sunucu üzerinde iz kayıtlarında görülebilmesi gönderilen parametrelerin gizlilik ihtiyacı varsa sıkıntı yaratabilir. Bu nedenlerle hassas isteklerin GET ile gönderilmemelidir.
+- **POST**: Bu metod ile sunucuya veri yazdırabilirsiniz. Bu metodla istek parametreleri hem URL içinde hem de mesaj gövdesinde gönderilebilir. Sadece mesaj gövdesinin kullanımı yukarıda sayılan riskleri engelleyecektir. Tarayıcılar geri butonuna basıldığında POST isteğinin mesaj gövdesinde yer alan parametreleri tekrar göndermek isteyip istemedimizi sorarlar. Bunun temel nedeni bir işlemi yanlışlıkla birden fazla yapmayı engellemektir. Bu özellik ve de güvenlik gerekçeleriyle bir işlem gerçekleştirileceğinde POST metodunun kullanılması önerilir.
+- **DELETE**: Bu metod ile sunucudaki herhangi bir veriyi silebilirsiniz.
+- **PUT-PATCH**: Bu metodlat bir kaynakta istediğiniz değişimi yapmanızı sağlar.PATCH'in PUT'tan temel olarak farkı daha küçük çaplı değişim yapmasıdır.
+
 
 
 
