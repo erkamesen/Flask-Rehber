@@ -1,6 +1,13 @@
 # Flask-Rehber
 
-![1 0G5zu7CnXdMT9pGbYUTQLQ](https://user-images.githubusercontent.com/120065120/212087425-6ee72546-16fc-476a-9067-54de6a4efbd9.png)
+<p>
+  <img align="left" width="500" height="300" src="https://user-images.githubusercontent.com/120065120/212087425-6ee72546-16fc-476a-9067-54de6a4efbd9.png" />
+  Flask, hafif bir WSGI web uygulama çerçevesidir. Karmaşık uygulamalara ölçeklenebilme özelliğiyle hızlı ve kolay bir başlangıç ​​yapmak için tasarlanmıştır. Werkzeug ve Jinja etrafında basit bir sarmalayıcı olarak başladı ve en popüler Python web uygulama çerçevelerinden biri haline geldi.
+</p>
+
+<br><br><br><br><br><br><br>
+
+
 
 ## İçerik:
 - [Flask Nedir ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-nedir-)
