@@ -4,6 +4,7 @@
 
 İçerik:
 - [Flask Nedir ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-nedir-)
+- [Flask neden Microframework olarak geçiyor ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-neden-microframework-olarak-ge%C3%A7iyor-)
 - [Flask Dependencies(Bağımlılıklar)](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-dependenciesba%C4%9F%C4%B1ml%C4%B1l%C4%B1klar)
 - [WSGI Nedir ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#wsgi-nedir-)
 - [Werkzeug Nedir ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#werkzeug-nedir-)
@@ -21,7 +22,12 @@ En kısa hali ile [Flask](https://flask.palletsprojects.com/en/2.2.x/) 2011 yıl
 Flask çabuk öğrenilebilen, kolay ve ihtiyacımız olan ek paketleri sonradan projemize dahil edebildiğimiz için projenin hantallaşmasını önleyen, route yapısı basit ve benchmarklarına bakıldığında performansı gayet yüksek bir frameworktür.
 Python kodlarını yazmak için Django gibi Jinja2 şablon motorunu ve Werkzeug aracı ile WSGI arayüzünü kullanır.
 
+---
+## Flask neden Microframework olarak geçiyor ?
 
+Flaskın microframework olarak adlandırılma sebebi; Flask yalnızca request, route ve blueprint gibi temel özellikleri bize sağlar. 
+Flaskı kurduğumuz zaman minimal uygulamalar yapabiliriz fakat uygulamalarımız geliştikçe harici olarak caching, ORM, formlar vb. 
+diğer özellikler için Flask-Extensions kullanmamız gerekiyor. Bunları da pip aracılığı ile kuruyoruz ve projemize import edebiliyoruz.
 ---
 ## Flask Dependencies(Bağımlılıklar)
 Flask kurulurken bu dağıtımlar otomatik olarak kurulacaktır:
@@ -172,13 +178,17 @@ index() fonksiyonumuz da route() decoratorunu gelen requestlere fonksiyonumuzun 
 Özetle anasayfamıza('/') bir GET request atıldığı zaman fonksiyonumuz tetikleniyor ve cliente bir response yolluyor.
 
 ![index](https://user-images.githubusercontent.com/120065120/212183376-3c1add42-399b-4957-b60b-50c30cd65b7d.PNG)
+
+**ÖZET**
+1. İlk önce Flask sınıfını importladık. Bu sınıftan oluşturduğumuz nesne bizim WSGI uygulamamız olacaktır.
+2. Daha sonra bu sınıfın bir örneğini oluşturuyoruz. İlk parametremiz, uygulamanın modülünün veya paketinin adıdır. __name__, ile bunu kısa bir şekilde halledebiliyoruz. Bu, Flask'ın templates ve static dosyalar gibi kaynakları nerede arayacağını bilmesi için gereklidir.
+3. Ardından, Flask'a hangi URL'nin işlevimizi tetiklemesi gerektiğini söylemek için route() dekoratörünü kullanıyoruz.
+4. Fonksiyon, clientin tarayıcısında görüntülemek istediğimiz mesajı döndürür. Varsayılan response türü HTML'dir.
 ---
 
 ## Route Deişkenleri
 
 Flask, uygulamamızda URL mize değişken ekleyerek dinamik hale getirmemizi mümkün kılıyor. Bu değişkenimizi URL mizde route('/<değişken>') olarak kullanabiliriz ve decoratorumuzun kullanıldığı fonksiyonda bu değişkeni çağırabiliriz.
-
-
 
 
 
