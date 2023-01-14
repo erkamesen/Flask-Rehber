@@ -2,14 +2,17 @@
 
 ![1 0G5zu7CnXdMT9pGbYUTQLQ](https://user-images.githubusercontent.com/120065120/212087425-6ee72546-16fc-476a-9067-54de6a4efbd9.png)
 
-İçerik:
+## İçerik:
 - [Flask Nedir ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-nedir-)
 - [Flask neden Microframework olarak geçiyor ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-neden-microframework-olarak-ge%C3%A7iyor-)
+- [Neden Flask ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#neden-flask-)
 - [Flask Dependencies(Bağımlılıklar)](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-dependenciesba%C4%9F%C4%B1ml%C4%B1l%C4%B1klar)
 - [WSGI Nedir ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#wsgi-nedir-)
 - [Werkzeug Nedir ?](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#werkzeug-nedir-)
 - [Flask Kurulumu](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-kurulumu)
 - [Klasör Yapısı](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#klas%C3%B6r-yap%C4%B1s%C4%B1)
+- [Flask ile Veritabanı Bağlantısı](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-ile-veritaban%C4%B1-ba%C4%9Flant%C4%B1s%C4%B1)
+- [Flsk ve SQLite](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-ve-sqlite)
 - [Jinja2 Template Sayfaları](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#jinja2-template-sayfalar%C4%B1)
 - [Default Host ve Port](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#default-host-ve-port)
 - [Basit Flask Uygulaması](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#basit-flask-uygulamas%C4%B1)
@@ -23,11 +26,16 @@ Flask çabuk öğrenilebilen, kolay ve ihtiyacımız olan ek paketleri sonradan 
 Python kodlarını yazmak için Django gibi Jinja2 şablon motorunu ve Werkzeug aracı ile WSGI arayüzünü kullanır.
 
 ---
-## Flask neden Microframework olarak geçiyor ?
+## Flask neden Microframework olarak geçiyor ? 
+- Flaskın microframework olarak adlandırılma sebebi; Flask yalnızca request, route ve blueprint gibi temel özellikleri bize sağlar. Flaskı kurduğumuz zaman minimal uygulamalar yapabiliriz fakat uygulamalarımız geliştikçe harici olarak caching, ORM, formlar vb. diğer özellikler için Flask-Extensions kullanmamız gerekiyor. Bunları da pip aracılığı ile kuruyoruz ve projemize import edebiliyoruz.
+---
+## Neden Flask ?
+- Dahili bir geliştirme sunucusuna sahiptir.
+- Geniş üçüncü taraf uzantıları vardır.
+- Bir web geliştiricisi tarafından hızla öğrenilebilir.
+- WSGI uyumludur.
+- Unicode'u destekler.
 
-Flaskın microframework olarak adlandırılma sebebi; Flask yalnızca request, route ve blueprint gibi temel özellikleri bize sağlar. 
-Flaskı kurduğumuz zaman minimal uygulamalar yapabiliriz fakat uygulamalarımız geliştikçe harici olarak caching, ORM, formlar vb. 
-diğer özellikler için Flask-Extensions kullanmamız gerekiyor. Bunları da pip aracılığı ile kuruyoruz ve projemize import edebiliyoruz.
 ---
 ## Flask Dependencies(Bağımlılıklar)
 Flask kurulurken bu dağıtımlar otomatik olarak kurulacaktır:
@@ -109,6 +117,19 @@ SQL sorguları yazmaya gerek kalmadan geliştirme sırasında veritabanı etkile
 MongoDB gibi No-SQL veri depolarıyla çalışmak için ise 'Flask-MongoEngine' uzantısını kullanabiliriz.
 
 ---
+## Flask ve SQLite
+SQLite, Python içind gömülüdür. Veritabanını Flask'ta kullanmak için herhangi bir ek Flask Uzantısı yüklememize gerek yoktur. Uygulamamız içinde, SQLite'ı içe aktarabilir ve veritabanıyla etkileşim için SQL sorguları yazabiliriz. <br>
+Bağlantıyı yapmak için config ayarını yapmamız yeterli. Config ayarlarını istersek uygulamızda oluşturduğumuz Flask nesnesine yazabiliriz yada istersek uygulamamızın bulunduğu klasörde config.py adlı bir dosya oluşturup <object>.from_pyfile('config.py') metotu ile bağlantıyı sağlayabiliriz. <br>
+**app.py**
+```
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///deneme.db'
+```
+**config.py**
+```
+SQLALCHEMY_DATABASE_URI = 'sqlite:///deneme.db'
+```
+
+
 ## Jinja2 Template Sayfaları
 [Jinja2](https://jinja.palletsprojects.com/en/3.1.x/) hızlı, etkileyici, genişletilebilir bir şablon oluşturma motorudur. Şablondaki özel yer tutucular, Python sözdizimine benzer kod yazmaya izin verir. 
 Özet olarak belirtmek gerekirse bu python kodları '{{ }}' ve '{% %}' arasındaki kısımlarda gerçekleşmekte. Daha doğru bir söylem ile bu kısımlarda oluşturduğumuz değişken isimleri projemizin python kısmında çalışıyor ve sonuçlar bu kısımlara aktarılmakta ve uygulamamız içinde bu sonuçlar gösterilebilmektedir.
