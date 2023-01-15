@@ -1,0 +1,12 @@
+{% include 'header.html' %}
+
+<div class="team">
+  <h1 style="color:yellow;" align="center"> En iyi <span style="color:red;">Galatasaray</span> Kadrosu</h1>
+  <ul>
+    {%for player in team %}
+    <li class="teamlist">{{ player }}</li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% include 'footer.html' %}

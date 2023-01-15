@@ -1,0 +1,23 @@
+{% include 'header.html' %}
+
+{% if 'muslera' in team %}
+<div class="team">
+  <h1 style="color:yellow;" align="center"> En iyi <span style="color:red;">Galatasaray</span> Kadrosu</h1>
+  <ul>
+    {%for player in team %}
+    <li class="teamlist">{{ player }}</li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% else %}
+<div class="team">
+  <h1 style="color:yellow;" align="center">Ne Yaparsan Yap Kaybettin</h1>
+  <ul>
+    {%for player in team %}
+    <li class="teamlist">{{ player }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+{% include 'footer.html' %}
