@@ -28,6 +28,7 @@ Flask size sadece öneriler sunar herhangi bir bağımlılık veya proje düzeni
 - [Route Değişkenleri](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#route-dei%C5%9Fkenleri)
 - [HTTP Metotları](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#http-metotlar%C4%B1)
 - [Flask ve Unique URL'ler](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-ve-unique-urller)
+- [Context Processor](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#context-processor)
 --- 
 
 ## Flask Nedir ?
@@ -363,14 +364,52 @@ def about():
 ```
 
 - '/projeler/' endpointi için standart URL'de sonunda bir slash(eğik çizgi) var URL'ye sonunda slash (/projeler) olmadan erişirseniz, Flask sizi sonunda eğik çizgi (/projects/) bulunan standart URL'ye yönlendirir.
-<br>
-- '/hakkinda' URL'mizin bitiş noktasında slash yoktur.URL'ye slash ile (/about/) erişildiği zaman 404 "Not Found" hatası oluşacaktır. Bu, URL'lerin benzersiz kalmasına ve arama motorlarının aynı sayfayı iki kez dizine eklemekten kaçınmasına yardımcı olur.
+- '/hakkinda' URL'mizin bitiş noktasında slash yoktur.URL'ye slash ile (/about/) erişildiği zaman 404 "Not Found" hatası oluşacaktır. Bu, URL'lerin benzersiz kalmasına ve arama motorlarının aynı sayfayı iki kez dizine eklemekten kaçınmasına yardımcı olur. <br>
 ---
 
+## Context Processor
 
+### Değişken
+Bir web uygulaması yapıyoruz ve oluşturduğumuz bir değişkeni şablonumuza yollamamız gerekiyor. Tabikide render_template() ile de html sayfamızın yanına yollayabiliriz ama değişkeni birden fazla şblona yollayacaksak context processor tm d bu noktada işimize gerçekten çok yarıycak. <br>
+context processor, şablon işlenmeden önce çalışan ve şablona yeni değerler ekleme yeteneğine sahip olan.Aslında key-value çiftinin şablon içeriğiyle birleştirilmiş olduğu bir sözlük return eden fonksiyondur.<br>
+Örnek: 
+```
+@app.context_processor
+def inject_user():
+    return dict(user=g.user)
+```
+Yukarıdaki örnekte, şablon bağlamına yeni bir değişken yollarken bir dekoratör '@app.context_processor' kullanıldığına dikkat edin. <br>
+user değişkeni, uygulamanızdaki şablon da {{ user }} olarak bulunur. Burada ki 'g', Flask tarafından sağlanan global değişkendir. <br>
+<br>
+Örnek olarak geçerli yılı web sayfanızın footerında Copyright metniyle birlikte görüntülemek istediğimizi düşünelim. Şablon dosyasını her yeni yılda manuel olarak düzenlemek ve değeri değiştirmek iyi bir fikir değildir. Bu yüzden bir fonksiyon oluşturup bu değişkeni şablonumuzda kullanılabilmek için fonksiyonumuzu @app.context_processor decoratörü ile süsleyeceğiz.
+```
+@app.context_processor
+def current_year():
+    return {'year': datetime.now().year}
+```
+Yukarıdaki context processor, year değişkenini tüm şablonlar için kullanılabilir hale getirir ve şablonlara şu şekilde aktarabiliriz:
+```
+{{ year }}
+```
+### Fonksiyon
 
+Contxt processor ile ayrıca fonksiyonlrı da şablonlar a kullanılabilir hale getirebiliriz. <br>
+Diyelim ki miktarı iki ondalık değerle biçimlendirmek istiyorsunuz, o zaman genel olarak aşağıdakine benzer bir işlev oluşturabiliriz:
+```
+@app.context_processor
+def utility_processor():
+    def format_price(amount, currency='₺'):
+        return '{1}{0:.2f}'.format(amount, currency)
+    return dict(format_price=format_price)
+```
+Artık format_price() fonksiyonu tüm şablonlar için kullanılabilir hale geldi. Şimdi onu kullanabiliriz:
 
+```
+{{ format_price(100) }}
+{{ format_price(100.33) }}
+```
 
-
-
-
+```
+₺100.00
+₺100.33
+```
