@@ -138,26 +138,126 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///deneme.db'
 ```
 SQLALCHEMY_DATABASE_URI = 'sqlite:///deneme.db'
 ```
-
+---
 
 ## Jinja2 Template Sayfaları
 [Jinja2](https://jinja.palletsprojects.com/en/3.1.x/) hızlı, etkileyici, genişletilebilir bir şablon oluşturma motorudur. Şablondaki özel yer tutucular, Python sözdizimine benzer kod yazmaya izin verir. 
 Özet olarak belirtmek gerekirse bu python kodları '{{ }}' ve '{% %}' arasındaki kısımlarda gerçekleşmekte. Daha doğru bir söylem ile bu kısımlarda oluşturduğumuz değişken isimleri projemizin python kısmında çalışıyor ve sonuçlar bu kısımlara aktarılmakta ve uygulamamız içinde bu sonuçlar gösterilebilmektedir.
+---
+
+## Template Kalıtımı(Inheritance)
+Jinja'nın en güçlü yanlarından biri template(şablon) inheritance dır. Şablon kalıtımı, sitenizin tüm ortak öğelerini içeren ve alt şablonların geçersiz kılabileceği blokları tanımlayan bir temel "iskelet" şablonu oluşturmanıza olanak tanır.
+<br>
+Kulağa karmaşık geliyor ama çok basit. Bir örnekle başlayarak anlamak en kolayı.
+### Base Template 
+'layout.html' yada 'base.html' olarak adlandırabileceğimiz bu şablon, basit bir sayfa için kullanabileceğiniz basit bir HTML iskelet belgesini tanımlar. Boş blokları içerikle doldurmak "alt" şablonların işidir:
+```
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{% block title %}{% endblock %}</title>
+    {% endblock %}
+  </head>
+  <body>
+    <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+      {% block footer %}
+      &copy; Copyright 2023 by <a href="http://domain.invalid/">you</a>.
+      {% endblock %}
+    </div>
+  </body>
+</html>
+```
+Bu örnekte, {% blok %} etiketleri, alt şablonların doldurabileceği dört blok tanımlar. Blok etiketinin yaptığı tek şey, şablon motoruna bir alt şablonun şablonun bu bölümlerini geçersiz kılabileceğini söylemektir.
+Özetle ilk başta ana HTML sayfası yüklenir ve kalıtımı alacağımız HTML sayfasında {% block x %}{% endblock %} arasını diğer html sayfalarında aynı block işaretlemesini yaparak aralarını doldururuz ve override yaparız.
+Daha iyi anlamak için kalıtım aldığımız child şablonda inceleyelim.
+
+### Child Template
+```
+{% extends "layout.html" %}
+{% block title %}Index{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+  <h1>Index</h1>
+  <p class="important">
+    Sayfama Hoşgeldiniz.
+{% endblock %}
+```
+{% extends %} etiketi burada anahtardır. Şablon motoruna child şablon yüklenirken parent üzerinden yüklenmesini belirtir. Şablon sistemi bu şablonu render ederken önce base şablonu bulur. Extends etiketi, şablondaki ilk etiket olmalıdır. Ana şablonda tanımlanan bir bloğun içeriğini kullanmak istiyorsanız {{ super() }} kullanabilirsiniz.
+
+### Include
+
+Özellikle çok sayfalı siteler yaparken header, footer, nav gibi bölümleri defalarca kullanıyoruz. include sayesinde farklı bir HTML sayfasında bu bölümleri yazıp şablonumuza dışarıdan dahil ederek aynı bölümleri yazmayı önlüyoruz.
+<br>
+**'header.html'**
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Templates</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="header">
+    <h1>{{ baslik }}</h1>
+</div>
+```
+<br>
+**'footer.html'**
+```
+<footer>
+    <h2 align="center"> © Copyright XXX 2023</h2>
+</footer>
+
+</body>
+</html>
+```
+
+2 Adet include edeceğimiz sayfamızı oluşturduk. Şimdi istediğimiz şablonlarımızda bu header ve footer bölümünü çağırabiliriz ve uygulamamızı kod kalabalığından uzak tutabiliriz.
+
+```
+{% include 'header.html' %}
+
+<div class="list">
+    <img align='left' src="../static/images/flask.png" alt="flask">
+    <ul align="center">
+        <li>{{ degisken1 }}</li>
+        <li>{{ degisken2 }}</li>
+        <li>{{ degisken1+degisken2 }}</li>
+    </ul>
+</div>
+
+{% include 'footer.html' %}
+```
+
+
+
+
+
+
 
 HTML sayfası içinde değişken kullanımı:
 ```
-{{ deşişken }}
+{{ variable }}
 ```
 HTML sayfası içinde koşullu ifadele kullanımı:
 ```
-{% if degisken %}
-{{ deşişken }}
+{% if variable %}
+{{ variable }}
 {% endif %}
 ```
 HTML sayfsı içinde loop kullanımı:
 ```
-{% for i in degisken %}
-{{ i }}
+{% for data in list %}
+{{ data }}
 {% endfor %}
 ```
 ---
