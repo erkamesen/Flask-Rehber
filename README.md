@@ -141,7 +141,7 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///deneme.db'
 ---
 
 ## Jinja2 Template Sayfaları
-[Jinja2](https://jinja.palletsprojects.com/en/3.1.x/) hızlı, etkileyici, genişletilebilir bir şablon oluşturma motorudur. Şablondaki özel yer tutucular, Python sözdizimine benzer kod yazmaya izin verir. 
+- [Jinja2](https://jinja.palletsprojects.com/en/3.1.x/) hızlı, etkileyici, genişletilebilir bir şablon oluşturma motorudur. Şablondaki özel yer tutucular, Python sözdizimine benzer kod yazmaya izin verir. 
 Özet olarak belirtmek gerekirse bu python kodları '{{ }}' ve '{% %}' arasındaki kısımlarda gerçekleşmekte. Daha doğru bir söylem ile bu kısımlarda oluşturduğumuz değişken isimleri projemizin python kısmında çalışıyor ve sonuçlar bu kısımlara aktarılmakta ve uygulamamız içinde bu sonuçlar gösterilebilmektedir.
 ---
 
@@ -211,10 +211,12 @@ Daha iyi anlamak için kalıtım aldığımız child şablonda inceleyelim.
 </div>
 ```
 <br>
-**'footer.html'**
+  
+**'footer.html'** <br>
+  
 ```
 <footer>
-    <h2 align="center"> © Copyright XXX 2023</h2>
+    <h2> © Copyright XXX 2023</h2>
 </footer>
 
 </body>
@@ -237,10 +239,7 @@ Daha iyi anlamak için kalıtım aldığımız child şablonda inceleyelim.
 
 {% include 'footer.html' %}
 ```
-
-
-
-
+<br>
 
 
 
@@ -362,9 +361,9 @@ def about():
     return 'Hakkında Sayfası'
 ```
 
-'/projeler/' endpointi için standart URL'de sonunda bir slash(eğik çizgi) var URL'ye sonunda slash (/projeler) olmadan erişirseniz, Flask sizi sonunda eğik çizgi (/projects/) bulunan standart URL'ye yönlendirir.
+- '/projeler/' endpointi için standart URL'de sonunda bir slash(eğik çizgi) var URL'ye sonunda slash (/projeler) olmadan erişirseniz, Flask sizi sonunda eğik çizgi (/projects/) bulunan standart URL'ye yönlendirir.
 <br>
-'/hakkinda' URL'mizin bitiş noktasında slash yoktur.URL'ye slash ile (/about/) erişildiği zaman 404 "Not Found" hatası oluşacaktır. Bu, URL'lerin benzersiz kalmasına ve arama motorlarının aynı sayfayı iki kez dizine eklemekten kaçınmasına yardımcı olur.
+- '/hakkinda' URL'mizin bitiş noktasında slash yoktur.URL'ye slash ile (/about/) erişildiği zaman 404 "Not Found" hatası oluşacaktır. Bu, URL'lerin benzersiz kalmasına ve arama motorlarının aynı sayfayı iki kez dizine eklemekten kaçınmasına yardımcı olur.
 ---
 
 
