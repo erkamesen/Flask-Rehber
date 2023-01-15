@@ -26,6 +26,7 @@ Flask size sadece öneriler sunar herhangi bir bağımlılık veya proje düzeni
 - [Basit Flask Uygulaması](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#basit-flask-uygulamas%C4%B1)
 - [Route Değişkenleri](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#route-dei%C5%9Fkenleri)
 - [HTTP Metotları](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#http-metotlar%C4%B1)
+- [Flask ve Unique URL'ler](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-ve-unique-urller)
 --- 
 
 ## Flask Nedir ?
@@ -240,10 +241,31 @@ def login():
         return show_the_login_form()
 ```
 
-- **GET**: Bu metod sunucudan veri almak için kullanılır. GET ve POST metodları en sık kullanılan metodlar olup sunucudaki kaynaklara erişmek için kullanılırlar.GET metodu ile sorgu metinleri URL içinde gönderilebilir. Bunun en önemli faydası kullanıcıların bookmark edebilmeleri ve aynı sorguyu içeren istekleri daha sonra gönderebilmelerini sağlaması ve tarayıcıda önceki sorguların “geri” tuşu ile veya tarayıcı geçmişinden çağrılarak aynı sayfalara ulaşabilmeleridir. Güvenlik açısından URL’lerin ekranda görüntüleniyor olması ve URL’in hedefine ulaşıncaya kadar ve hedef sunucu üzerinde iz kayıtlarında görülebilmesi gönderilen parametrelerin gizlilik ihtiyacı varsa sıkıntı yaratabilir. Bu nedenlerle hassas isteklerin GET ile gönderilmemelidir.
+- **GET**: Bu metod ile sunucudan veri alınabilir. GET ve POST metodları genel olarak en sık kullanılan metodlar olup sunucudaki kaynaklara erişmek için kullanılırlar.GET metodu ile sorgu metinleri URL içinde gönderilebilir. Bunun en önemli faydası kullanıcıların bookmark edebilmeleri ve aynı sorguyu içeren istekleri daha sonra gönderebilmelerini sağlaması ve tarayıcıda önceki sorguların “geri” tuşu ile veya tarayıcı geçmişinden çağrılarak aynı sayfalara ulaşabilmeleridir. Güvenlik açısından URL’lerin ekranda görüntüleniyor olması ve URL’in hedefine ulaşıncaya kadar ve hedef sunucu üzerinde iz kayıtlarında görülebilmesi gönderilen parametrelerin gizlilik ihtiyacı varsa sıkıntı yaratabilir. Bu nedenlerle hassas isteklerin GET ile gönderilmemelidir.
 - **POST**: Bu metod ile sunucuya veri yazdırabilirsiniz. Bu metodla istek parametreleri hem URL içinde hem de mesaj gövdesinde gönderilebilir. Sadece mesaj gövdesinin kullanımı yukarıda sayılan riskleri engelleyecektir. Tarayıcılar geri butonuna basıldığında POST isteğinin mesaj gövdesinde yer alan parametreleri tekrar göndermek isteyip istemedimizi sorarlar. Bunun temel nedeni bir işlemi yanlışlıkla birden fazla yapmayı engellemektir. Bu özellik ve de güvenlik gerekçeleriyle bir işlem gerçekleştirileceğinde POST metodunun kullanılması önerilir.
 - **DELETE**: Bu metod ile sunucudaki herhangi bir veriyi silebilirsiniz.
-- **PUT-PATCH**: Bu metodlat bir kaynakta istediğiniz değişimi yapmanızı sağlar.PATCH'in PUT'tan temel olarak farkı daha küçük çaplı değişim yapmasıdır.
+- **PUT-PATCH**: Bu metodlar bir kaynakta istediğiniz değişimi yapmanızı sağlar.PATCH'in PUT'tan temel olarak farkı daha küçük çaplı değişim yapmasıdır.
+
+---
+
+## Flask ve Unique URL'ler
+
+Aşağıdaki iki kural, sondaki eğik çizgi kullanımlarında farklılık gösterir.
+
+```
+@app.route('/projeler/')
+def projects():
+    return 'Proje Sayfası'
+
+@app.route('/hakkinda')
+def about():
+    return 'Hakkında Sayfası'
+```
+
+'/projeler/' endpointi için standart URL'de sonunda bir slash(eğik çizgi) var URL'ye sonunda slash (/projeler) olmadan erişirseniz, Flask sizi sonunda eğik çizgi (/projects/) bulunan standart URL'ye yönlendirir.
+<br>
+'/hakkinda' URL'mizin bitiş noktasında slash yoktur.URL'ye slash ile (/about/) erişildiği zaman 404 "Not Found" hatası oluşacaktır. Bu, URL'lerin benzersiz kalmasına ve arama motorlarının aynı sayfayı iki kez dizine eklemekten kaçınmasına yardımcı olur.
+---
 
 
 
