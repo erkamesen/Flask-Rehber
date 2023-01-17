@@ -31,6 +31,7 @@ Flask size sadece öneriler sunar herhangi bir bağımlılık veya proje düzeni
 - [Context Processor](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#context-processor)
 - [Statik Dosyalar](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#statik-dosyalar)
 - [Render Template](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#render-template)
+- [Logging](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#logging)
 --- 
 
 ## Flask Nedir ?
@@ -507,3 +508,35 @@ Flask, işlemek için templates klasöründeki 'user.html' dosyasını arayackt�
 ```
 Şablonların içinde [config](https://flask.palletsprojects.com/en/2.2.x/api/#flask.Flask.config), [request](request), [session](https://flask.palletsprojects.com/en/2.2.x/api/#flask.session) ve [g](https://flask.palletsprojects.com/en/2.2.x/api/#flask.g) nesnelerinin yanı sıra [url_for()](https://flask.palletsprojects.com/en/2.2.x/api/#flask.url_for) ve [get_flashed_messages()](https://flask.palletsprojects.com/en/2.2.x/api/#flask.get_flashed_messages) fonksiyonlarına da erişebilirsiniz. <br>
 
+---
+
+##Message Flashing
+
+İyi uygulamalar ve kullanıcı arayüzleri tamamen geri bildirimlerle ilgilidir.Kullanıcı belli durumlarda yeterli geri bildirim almazsa yüksek ihtimalle uygulamadan nefret edecektir ki bu da geliştiriciler olarak en istemeyeceğimiz şeylerin başında gelir. <br>
+Flask, flashing sistemi ile bir kullanıcıya geri bildirim vermenin gerçekten çok basit bir yolunu bize sunuyor.Flashing bize temel olarak bir request in sonunda bir mesaj kaydedip o istekten bir sonraki talepte kullanıcıya kaydedilen geri bildirimi sağlar. Python tarafında yazılan kod şablon da ki mesaj bölümüyle bir metod ile ilişkilenir ve mesajı kullanıcıya gösterir. <br>
+Bir mesajı flaşlamak için flash() yöntemini kullanırız, mesajları elde etmek için ise şablonlarda da bulunan get_flashed_messages() yöntemini kullanabilirsiniz. 
+```
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+       if request.form['password'] == '123456' and request.form['username'] == 'admin':
+            flash('You were successfully logged in')
+            return redirect(url_for('index'))
+    else:
+        return render_template('login.html')
+```
+
+Burda formdan POST metodu ile aldığımız 'username' ve 'password' bilgilerini basit bir şekilde karşılaştırıp.Hemen o karşılştırmadan sonra hzırlayacağımız return yani kullanıcıya yollacağımız response dan önce 'flash()' ile bir mesaj oluşturuyoruz ve o mesajı şblond şu şekilde yakalıyoruz:
+```
+<title>Uygulama</title>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+{% block content %}{% endblock %}
+```
