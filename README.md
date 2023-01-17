@@ -29,6 +29,8 @@ Flask size sadece öneriler sunar herhangi bir bağımlılık veya proje düzeni
 - [HTTP Metotları](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#http-metotlar%C4%B1)
 - [Flask ve Unique URL'ler](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#flask-ve-unique-urller)
 - [Context Processor](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#context-processor)
+- [Statik Dosyalar](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#statik-dosyalar)
+- [Render Template](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#render-template)
 --- 
 
 ## Flask Nedir ?
@@ -320,7 +322,46 @@ index() fonksiyonumuz da route() decoratorunu gelen requestlere fonksiyonumuzun 
 
 ## Route Deişkenleri
 
-Flask, uygulamamızda URL mize değişken ekleyerek dinamik hale getirmemizi mümkün kılıyor. Bu değişkenimizi URL mizde route('/<değişken>') olarak kullanabiliriz ve decoratorumuzun kullanıldığı fonksiyonda bu değişkeni çağırabiliriz.
+Flask, uygulamamızda URL mize değişken ekleyerek dinamik hale getirmemizi mümkün kılıyor. Bu değişkenimizi URL mizde route('/<değişken>') olarak kullanabiliriz. <br>
+Fonksiyonumuz daha sonra <değişken_adı> öğesini bir arguman olarak alır. İsteğe bağlı olarak, <converter:değişken_adı> gibi bağımsız değişkenin türünü belirtmek için bir dönüştürücü kullanabiliriz.
+
+```
+@app.route('/user/<username>')
+def show_user_profile(username):
+    # username için kullanıcı profilini gösterir
+    return f'User {username}'
+
+@app.route('/post/<int:post_id>')
+def show_post(post_id):
+    # Verilen id de olan postu göster. ID integer olmalı.
+    return f'Post {post_id}'
+
+@app.route('/path/<path:subpath>')
+def show_subpath(subpath):
+    return f'Subpath {subpath}'
+```
+<table>
+<tr>
+<td>string</td>
+<td>(varsayılan) herhangi bir stringi eğik çizgi olmadan kabul eder</td>
+</tr>
+<tr>
+<td>int</td>
+<td>pozitif tam sayıları kabul eder</td>
+</tr>
+<tr>
+<td>float</td>
+<td>pozitif float değerlerini kabul eder</td>
+</tr>
+<tr>
+<td>path</td>
+<td>string gibidir ama ek olarak eğik çizgileri de kabul eder</td>
+</tr>
+<tr>
+<td>uuid</td>
+<td>UUID stringlerini kabul eder</td>
+</tr>
+</table>
 
 ## HTTP Metotları
 
@@ -413,3 +454,56 @@ Artık format_price() fonksiyonu tüm şablonlar için kullanılabilir hale geld
 ₺100.00
 ₺100.33
 ```
+formar_price() fonksiyonunu değişken gibi şablonumuzun içinde kullandık.
+
+## Statik Dosyalar
+
+Dinamik web uygulamaları da statik dosyalara ihtiyaç duyar. CSS, JavaScript, resim dosyalarının geldiği yer genellikle burasıdır.<br>
+Web sunucunuz bunları sizin için sunacak şekilde yapılandırılmıştır, ancak geliştirme sırasında Flask bunu da yapabilir. Paketinizde veya modülünüzün yanında static adlı bir klasör oluşturmanız yeterlidir; bu, uygulamada /static konumunda olacaktır. <br>
+Statik dosyalara URL'ler oluşturmak üzere özel 'statik' endpointini kullanırız:
+```
+url_for('static', filename='style.css')
+```
+Dosya, dosya sisteminde static/style.css olarak saklanmalıdır.
+
+## Render Template
+
+Python'dan HTML oluşturmak oldukça uğraştırıcıdır çünkü uygulamayı güvende tutmak için [HTML Escape](https://flask.palletsprojects.com/en/2.2.x/quickstart/#html-escaping)'i kendi başınıza yapmanız gerekir. Bu nedenle Flask, Jinja2 şablon motorunu sizin için otomatik olarak bunları yapılandırır ve size basit bir kullanım sağlar. <br>
+Şablonlar, herhangi bir türde metin dosyası oluşturmak için kullanılabilir. Web uygulamaları için HTML, e-postalar için düz metin gibi herhangi bir şey de oluşturabilirsiniz. <br>
+Bir şablonu oluşturmak için flask paketinden render_template() yöntemini kullanabiliz. Tek yapmanız gereken, şablonun adını ve şablona yollayacağımız değişkenleri arguman olarak iletmektir. Şablonun nasıl oluşturulacağına dair basit bir örnek:
+```
+from flask import render_template
+
+@app.route('/user/')
+@app.route('/user/<name>')
+def hello(name=None):
+    variable = 'Ahmet'
+    return render_template('user.html', name=variable)
+```
+Flask, işlemek için templates klasöründeki 'user.html' dosyasını arayacktır. Dolayısıyla, uygulamanız bir modül ise, bu klasör o modülün yanındadır, eğer bir paket ise, aslında paketinizin içindedir: <br>
+- Modül:
+```
+/application.py
+/templates
+    /hello.html
+```
+- Paket:
+```
+/application
+    /__init__.py
+    /templates
+        /hello.html
+```
+Şablonlar için Jinja2 şablonlarının tüm gücünü kullanabilirsiniz. Daha fazla bilgi için [Jinja2 Template Documentation](https://jinja.palletsprojects.com/en/3.1.x/templates/)'ı ziyaret edebilirsiniz.
+
+```
+<!doctype html>
+<title>Hello from Flask</title>
+{% if name %}
+  <h1>Hello {{ name }}!</h1>
+{% else %}
+  <h1>Hello, World!</h1>
+{% endif %}
+```
+Şablonların içinde [config](https://flask.palletsprojects.com/en/2.2.x/api/#flask.Flask.config), [request](request), [session](https://flask.palletsprojects.com/en/2.2.x/api/#flask.session) ve [g](https://flask.palletsprojects.com/en/2.2.x/api/#flask.g) nesnelerinin yanı sıra [url_for()](https://flask.palletsprojects.com/en/2.2.x/api/#flask.url_for) ve [get_flashed_messages()](https://flask.palletsprojects.com/en/2.2.x/api/#flask.get_flashed_messages) fonksiyonlarına da erişebilirsiniz. <br>
+
