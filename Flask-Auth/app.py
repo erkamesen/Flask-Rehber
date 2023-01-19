@@ -40,6 +40,10 @@ def register():
         form_email = request.form.get('email')
         form_name = request.form.get('name')
         form_password = request.form.get('password')
+	if User.query.filter_by(email=request.form.get('email')).first():
+		#Kullanıcı var mı ?
+			flash("Böyle bir kullanıcı var lütfen giriş yapınız.")
+			return redirect(url_for('login'))
         hashed_password = generate_password_hash(form_password, method='pbkdf2:sha256',salt_length=8) # girilen şifreyi hashliyoruz
         new_user = User(email=form_email, password=hashed_password, name=form_name) 
         # veritabanına ekliyoruz.
