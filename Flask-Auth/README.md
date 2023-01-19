@@ -1,4 +1,4 @@
-#python #flask #proje 
+# Flask - Login
 
 Bu projede içinde userlarımızı barındıran bir database oluşturucaz. Kayıt olan kişiler */secrets* endpointimizde ki linkle beraber belirlediğimiz dosyayı indirebilecekler.
 
@@ -16,17 +16,13 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 
 ```py
 app = Flask(__name__)
+login_manager = LoginManager()
 
 app.config['SECRET_KEY'] = 'secret-key-goes-here'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
 db = SQLAlchemy(app)
-
-
-login_manager = LoginManager()
-login_manager.init_app(app)
 
 
 @login_manager.user_loader
@@ -85,15 +81,16 @@ Anasayfamızda *login* yada *register* bölümleri giriş yapmış kullanıcıya
 			<li class="nav-item">
 				<a class="nav-link" href="{{ url_for('register') }}">Register</a>
 			</li>
-			{% endif %}
+			{% else %}
 
 			<li class="nav-item">
 				<a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
 			</li>
+			{% endif %}
 		</ul>
 ```
 
->Eğer kullanıcı giriş yaparsa loggen_in True dönüyor dolayısıyla koşulumuz not sayesinde False dönceği için Login ve Register görünmeyecek.
+>Eğer kullanıcı giriş yaparsa loggen_in True dönüyor dolayısıyla koşulumuz not sayesinde False dönceği için Login ve Register görünmeyecek fakat else durumu çalıştığı için Logout kısmı görünecek.
 
 
 ```py
@@ -105,24 +102,16 @@ def register():
 			flash("You've already signed up with that email, log in instead!")
 			return redirect(url_for('login'))
  
-
-		hash_and_salted_password = generate_password_hash(
-		request.form.get('password'),
-		method='pbkdf2:sha256',
-		salt_length=8
-		)
-
-		new_user = User(
-		email=request.form.get('email'),
-		name=request.form.get('name'),
-		password=hash_and_salted_password,
-		)
-
+		hashed_password = generate_password_hash(form_password, method='pbkdf2:sha256',salt_length=8) # girilen şifreyi hashliyoruz
+		new_user = User(email=form_email, password=hashed_password, name=form_name) 
+		# veritabanına ekliyoruz.
 		db.session.add(new_user)
 		db.session.commit()
-		login_user(new_user)
-		return redirect(url_for("secrets"))
-	return render_template("register.html", logged_in=current_user.is_authenticated)
+
+		#Kullanıcıyı giriş yapmak için login sayfasına yönlendiriyoruz.
+		return redirect(url_for('login'))  
+    else:
+        return render_template("register.html", logged_in=current_user.is_authenticated)
 ```
 
 *POST* methodlarını yakalıyoruz. 
@@ -142,38 +131,35 @@ ile beraber form dan aldığımız şifreyi 8 kere saltlayıp hashleyip veritaba
 
 
 ```py
-@app.route('/login', methods=["GET", "POST"])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-	if request.method == "POST":
-		email = request.form.get('email')
-		password = request.form.get('password')
-
-		user = User.query.filter_by(email=email).first()
-		#Email doesn't exist or password incorrect.
-
-		if not user:
-			flash("That email does not exist, please try again.")
-			return redirect(url_for('login'))
-
-		elif not check_password_hash(user.password, password):
-			flash('Password incorrect, please try again.')
-			return redirect(url_for('login'))
-
-		else:
-			login_user(user)
-			return redirect(url_for('secrets'))
-	
-	return render_template("login.html", logged_in=current_user.is_authenticated)
+    if request.method == 'POST':
+        form_email = request.form.get('email')
+        form_password = request.form.get('password')
+        user = User.query.filter_by(email=form_email).first()
+        if user:
+            if check_password_hash(user.password, form_password):
+                login_user(user)
+                return redirect(url_for('secrets'))
+            else:
+                flash('Lütfen şifrenizi kontrol ediniz.')
+                return render_template("login.html")
+        else:
+            flash('Lütfen maili kontrol ediniz.')
+            return render_template("login.html")        
+        
+    else:
+        return render_template("login.html", logged_in=current_user.is_authenticated)
 ```
 
 
 Login kısmımızda formdan gelen mail ile veritabanınından kullanıcımızı çekiyoruz.
 
-Eğer gelen kullanıcı yok ise flash() ile böyle bi email yok mesajı yolluyoruz.
+Eğer gelen kullanıcı yok ise flash() ile maili kontrol edin mesajı yolluyoruz.
 
->elif not check_password_hash(user.password, password):
+check_password_hash(user.password, password):
 
-ile ilk parametreyi kullanıcının şifresini 2. parametreye ise form dan gelen parolayı yazıp karşılaştırıyoruz. Eğer şifreler birbiri ile eşleşmiyorsa flash() ile şifre yanlış diye mesaj yolluyoruz.
+ile ilk parametreyi kullanıcının şifresini 2. parametreye ise form dan gelen parolayı yazıp karşılaştırıyoruz. Eğer şifreler birbiri ile eşleşmiyorsa flash() ile Lütfen şifrenizi kontrol ediniz mesajı yolluyoruz.
 
 Eğer şifre de doğru ise login_user(user) ile kullanıcımızı aktif ediyoruz ve redirect(url_for('secrets')) sayfasına yolluyoruz.
 
@@ -196,7 +182,7 @@ def secrets():
 >login_required decoratoru ile girişimizi ayarlıyoruz.
 
 
-secrets.html  üstündeki "Welcome {{ name }}" kısmına parametre olarak current_user.name ile giriş yapan kullanıcının ismini yolluyoruz.
+secrets.html  üstündeki "Welcome {{ user }}" kısmına parametre olarak current_user.name ile giriş yapan kullanıcının ismini yolluyoruz.
 
 
 ```py
