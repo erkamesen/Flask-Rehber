@@ -34,6 +34,7 @@ Flask size sadece öneriler sunar herhangi bir bağımlılık veya proje düzeni
 - [Logging](https://github.com/erkamesen/Flask-Rehber/edit/main/README.md#logging)
 ## Paketler ve Uygulamalar:
 - [Flask - Login](https://github.com/erkamesen/Flask-Rehber/tree/main/Flask-Auth#flask---login)
+- [Flask - HTML Forms](https://github.com/erkamesen/Flask-Rehber/tree/main/Flask%20-%20HTML%20Forms#html-forms)
 --- 
 
 ## Flask Nedir ?
