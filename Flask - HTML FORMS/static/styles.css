@@ -1,0 +1,28 @@
+body{
+    background-color:#212521;
+    color: whitesmoke;
+}
+
+.bg-body-tertiary{
+    background-color: #702cf5;
+}
+
+.navbar-brand{
+    color:bisque;
+    
+}
+
+.merkez{
+    background-color: #212521;
+   width: 20%;
+   padding: 10% 0% 10% 0%;
+   color: white;
+   align-items: center;
+   text-align: center;
+}
+h1{
+    font-size: 2em;
+    color: brown;
+    font-weight: bolder;
+    text-align: center;
+}
