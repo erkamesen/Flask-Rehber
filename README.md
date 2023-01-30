@@ -513,7 +513,7 @@ Flask, işlemek için templates klasöründeki 'user.html' dosyasını arayackt�
 
 ---
 
-##Message Flashing
+## Message Flashing
 
 İyi uygulamalar ve kullanıcı arayüzleri tamamen geri bildirimlerle ilgilidir.Kullanıcı belli durumlarda yeterli geri bildirim almazsa yüksek ihtimalle uygulamadan nefret edecektir ki bu da geliştiriciler olarak en istemeyeceğimiz şeylerin başında gelir. <br>
 Flask, flashing sistemi ile bir kullanıcıya geri bildirim vermenin gerçekten çok basit bir yolunu bize sunuyor.Flashing bize temel olarak bir request in sonunda bir mesaj kaydedip o istekten bir sonraki talepte kullanıcıya kaydedilen geri bildirimi sağlar. Python tarafında yazılan kod şablon da ki mesaj bölümüyle bir metod ile ilişkilenir ve mesajı kullanıcıya gösterir. <br>
