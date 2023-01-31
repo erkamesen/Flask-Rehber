@@ -31,7 +31,7 @@ Flask size sadece öneriler sunar herhangi bir bağımlılık veya proje düzeni
 - [Context Processor](https://github.com/erkamesen/Flask-Rehber#context-processor)
 - [Statik Dosyalar](https://github.com/erkamesen/Flask-Rehber#statik-dosyalar)
 - [Render Template](https://github.com/erkamesen/Flask-Rehber#render-template)
-- [Logging](https://github.com/erkamesen/Flask-Rehber#logging)
+- [Message Flashing](https://github.com/erkamesen/Flask-Rehber#message-flashing)
 ## Paketler ve Uygulamalar:
 - [Flask - Login](https://github.com/erkamesen/Flask-Rehber/tree/main/Flask-Auth#flask---login)
 - [Flask - HTML Forms](https://github.com/erkamesen/Flask-Rehber/tree/main/Flask%20-%20HTML%20Forms#html-forms)
