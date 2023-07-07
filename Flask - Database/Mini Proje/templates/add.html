@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1>Köpek Sahiplendirmek ister misiniz ?</h1>
+    <p>Veritabanimiza Yeni Bir Tane Ekle!!</p>
+    <form action="" method="post">
+
+        {{form.hidden_tag()}}
+        {{form.name.label}}
+        {{form.name}}{{form.submit()}}
+    </form>
+</div>
+
+
+{% endblock %}

@@ -1,9 +1,10 @@
-from basic import db, Dog, app
+from Relationships.basic import db, Dog, app
 
 
 # Tüm tabloları oluşturma
 with app.app_context():
 
+    db.drop_all() # Verileri tekrar tekrar eklemesin diye.
     db.create_all()
 
 

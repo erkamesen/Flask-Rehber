@@ -73,9 +73,8 @@ set FLASK_APP=app.py
 Eğer flask app  env değişkenini ayarlamadıysanız aşağıdaki hatayı alabilirsiniz:
 > Error: Cold not locate Flask application. You did not provide FLASK_APP environment variable.
 
-"migrations_instructions.txt" Dosyasını kontrol edebilirsiniz.
 
-2. Migrations klasörünü ayarlama
+1. Migrations klasörünü ayarlama
 
 ```
 flask db init

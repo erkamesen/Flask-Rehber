@@ -1,4 +1,4 @@
-from basic import db, Dog, app
+from Relationships.basic import db, Dog, app
 
 
 """ ## CREATE ## """

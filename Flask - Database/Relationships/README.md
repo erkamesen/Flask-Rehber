@@ -13,10 +13,14 @@
 **Dog**
 - ID(Primary Key)
 - NAME
-- AGE
-- BREED
-  
+
+**Toy**
+- ID(Primary Key)
+- ITEM_NAME
+- DOG_ID(Foreign Key)
+- 
 **Owner**
 - ID(Primary Key)
 - NAME
-- DOG ID(Foreign Key)
+- DOG_ID(Foreign Key)
+
