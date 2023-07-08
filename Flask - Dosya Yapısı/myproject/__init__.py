@@ -1,8 +1,9 @@
 # __init__.py 
 import os 
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+
 
 
 app = Flask(__name__)
@@ -15,3 +16,15 @@ app.config["SECRET_KEY"] = "thisisasecretkey"
 
 db = SQLAlchemy(app)
 Migrate(app, db)
+
+from myproject.owners.views import owner
+from myproject.dogs.views import dog
+
+app.register_blueprint(dog)
+app.register_blueprint(owner)
+
+@app.route("/")
+def index():
+    return render_template("home.html")
+
+

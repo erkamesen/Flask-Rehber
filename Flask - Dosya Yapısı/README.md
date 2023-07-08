@@ -23,7 +23,7 @@ Python bize oldukça readable bir kod mantığı sağlarken de işleri karışt�
 ├── **requirements.txt** > *pip ile kurulacak dosyalar.*
 ├── **migrations** > *Migrations kurulumu yaptıktan sonra oluşacak klasör.*
 ├── **myproject** > *Main proje dosyası, componentler bunun içinde olucak.*
-&nbsp;|&emsp;&emsp;|  **data.sqlite**
+├──  **myprojectdata.sqlite**
 &nbsp;|&emsp;&emsp;|  **models.py**
 &nbsp;|&emsp;&emsp;|  **\_\_init__.py**
 &nbsp;|&emsp;&emsp;|
