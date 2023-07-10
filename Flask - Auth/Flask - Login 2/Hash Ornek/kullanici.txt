@@ -1,0 +1,1 @@
+Kullanici Adi: erkam, Sifre: pbkdf2:sha256:600000$4PQhaZbWdR3AcaEO$fb550d968fc7cd98f0d7800d2778379a1d3dff19a64cfad81b9c1406f07a8081

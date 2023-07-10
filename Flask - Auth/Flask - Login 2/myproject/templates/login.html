@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="" method="post">
+
+    {{form.hidden_tag()}}
+    {{form.email.label}}{{form.email}} <br>
+    {{form.password.label}}{{form.password}} <br>
+    {{form.submit()}}
+
+</form>
+{% with messages = get_flashed_messages()%}
+{% if massages%}
+    {% for massage in massages%}
+    <p>{{massage}}</p>
+    {%endfor%}
+    {%endif%}
+    {%endwith%}
+
+
+{% endblock %}

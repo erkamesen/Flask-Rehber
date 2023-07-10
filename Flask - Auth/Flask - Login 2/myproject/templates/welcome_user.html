@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron">
+    <p>Tebrikler Başarılı şekilde Giriş Yaptınız.!!!!</p>
+</div>
+{% with messages = get_flashed_messages()%}
+{% if massages%}
+    {% for massage in massages%}
+    <p>{{massage}}</p>
+    {%endfor%}
+    {%endif%}
+    {%endwith%}
+{% endblock %}

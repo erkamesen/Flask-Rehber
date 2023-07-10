@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    {% if current_user.is_authenticated %}
+            <p> Hi{{current_user.username}} !</p>
+            {% else %}
+            <p>Please Login or Register</p>
+    {% endif %}
+    
+</div>
+{% with messages = get_flashed_messages()%}
+{% if massages%}
+    {% for massage in massages%}
+    <p>{{massage}}</p>
+    {%endfor%}
+    {%endif%}
+    {%endwith%}
+
+{% endblock %}
